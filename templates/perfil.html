@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minha Conta | Loja Mix</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar sticky">
+        <div class="container nav-content">
+            <div class="logo"><a href="/">LOJA <span>MIX</span></a></div>
+            <div class="nav-icons"><a href="/"><i class="fas fa-home"></i> Home</a></div>
+        </div>
+    </nav>
+
+    <div class="container section-padding" style="margin-top: 80px;">
+        <div class="profile-card">
+            <div class="profile-header">
+                <i class="fas fa-user-circle fa-5x"></i>
+                <h2>{{ user.nome }}</h2>
+                <p>{{ user.email }}</p>
+            </div>
+            <div class="profile-stats">
+                <div class="stat">
+                    <span>{{ user.pedidos }}</span>
+                    <p>Pedidos</p>
+                </div>
+                <div class="stat">
+                    <span>0</span>
+                    <p>Cupons</p>
+                </div>
+            </div>
+            <button class="btn-main" style="width:100%; margin-top:20px;">Editar Perfil</button>
+        </div>
+    </div>
+</body>
+</html>

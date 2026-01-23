@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOJA MIX | Streetwear & Fashion</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <a href="/">LOJA <span>MIX</span></a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Masculino</a></li>
+                <li><a href="#">Feminino</a></li>
+                <li><a href="#">Acessórios</a></li>
+                <li><a href="#">Coleções</a></li>
+            </ul>
+            <div class="nav-icons">
+                <a href="/perfil"><i class="far fa-user"></i></a>
+                <a href="/carrinho"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
+            <h1>ESTILO QUE <br>DEFINE VOCÊ</h1>
+            <p>A nova coleção de Streetwear já chegou.</p>
+            <a href="#shop" class="btn-main">Ver Coleção</a>
+        </div>
+    </header>
+
+    <section id="shop" class="container section-padding">
+        <div class="section-header" data-aos="fade-right">
+            <h2>Destaques da Semana</h2>
+            <div class="line"></div>
+        </div>
+
+        <div class="product-grid">
+            {% for p in produtos %}
+            <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-image">
+                    {% if 'http' in p.image %}
+                        <img src="{{ p.image }}" alt="{{ p.name }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='img/' + p.image) }}" alt="{{ p.name }}">
+                    {% endif %}
+                    <button class="btn-cart-hover"><i class="fas fa-plus"></i> Add</button>
+                </div>
+                <div class="card-details">
+                    <span class="category">{{ p.category }}</span>
+                    <h3>{{ p.name }}</h3>
+                    <div class="price-row">
+                        <span class="price">R$ {{ "%.2f"|format(p.price) }}</span>
+                    </div>
+                </div>
+                <a href="/adicionar/{{ p.id }}" class="card-link"></a>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>LOJA MIX &copy; 2024. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        
+        // Efeito de Navbar transparente que fica sólida ao rolar
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('sticky', window.scrollY > 0);
+        });
+    </script>
+</body>
+</html>
