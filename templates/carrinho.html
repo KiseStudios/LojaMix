@@ -1,25 +1,15 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Meu Carrinho | Loja Mix</title>
+{% extends "base.html" %}
 
-    <link rel="stylesheet" href="/static/style.css">
-    <link rel="stylesheet" href="/static/carrinho.css">
-</head>
-<body>
+{% block title %}Meu Carrinho | Loja Mix{% endblock %}
+{% block nav_class %}sticky{% endblock %}
 
-<nav class="navbar sticky">
-    <div class="container nav-content">
-        <div class="logo"><a href="/">LOJA <span>MIX</span></a></div>
-        <div class="nav-icons">
-            <a href="/"><i class="fas fa-arrow-left"></i> Voltar</a>
-        </div>
-    </div>
-</nav>
+{% block extra_css %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='carrinho.css') }}">
+{% endblock %}
 
+{% block content %}
 <div class="container section-padding carrinho-wrapper">
-    <h2>Seu Carrinho</h2>
+    <h2 style="margin-bottom: 30px; text-transform: uppercase;">Seu Carrinho</h2>
 
     <div class="cart-container">
         <table class="cart-table">
@@ -28,18 +18,34 @@
                     <th>Produto</th>
                     <th>Preço</th>
                     <th>Qtd</th>
+                    <th>Subtotal</th>
                 </tr>
             </thead>
             <tbody>
+                {% for item in itens %}
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            {% if 'http' in item.image %}
+                                <img src="{{ item.image }}" alt="{{ item.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='img/' + item.image) }}" alt="{{ item.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            {% endif %}
+                            <span>{{ item.name }}</span>
+                        </div>
+                    </td>
+                    <td>R$ {{ "%.2f"|format(item.price) }}</td>
+                    <td>{{ item.qtd }}</td>
+                    <td>R$ {{ "%.2f"|format(item.price * item.qtd) }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
 
         <div class="cart-total">
-            <h3>Total:</h3>
+            <h3>Total: R$ {{ "%.2f"|format(total) }}</h3>
             <button class="btn-main">Finalizar Compra</button>
         </div>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}
