@@ -3,48 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Meu Carrinho | Loja Mix</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/carrinho.css">
 </head>
 <body>
-    <nav class="navbar sticky">
-        <div class="container nav-content">
-            <div class="logo"><a href="/">LOJA <span>MIX</span></a></div>
-            <div class="nav-icons"><a href="/"><i class="fas fa-arrow-left"></i> Voltar</a></div>
-        </div>
-    </nav>
 
-    <div class="container section-padding" style="margin-top: 80px;">
-        <h2>Seu Carrinho</h2>
-        <div class="cart-container">
-            {% if itens %}
-                <table class="cart-table">
-                    <thead>
-                        <tr>
-                            <th>Produto</th>
-                            <th>Preço</th>
-                            <th>Qtd</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in itens %}
-                        <tr>
-                            <td>{{ item.name }}</td>
-                            <td>R$ {{ "%.2f"|format(item.price) }}</td>
-                            <td>{{ item.qtd }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div class="cart-total">
-                    <h3>Total: R$ {{ "%.2f"|format(total) }}</h3>
-                    <button class="btn-main">Finalizar Compra</button>
-                </div>
-            {% else %}
-                <p>O seu carrinho está vazio.</p>
-                <a href="/" class="btn-main">Ir às compras</a>
-            {% endif %}
+<nav class="navbar sticky">
+    <div class="container nav-content">
+        <div class="logo"><a href="/">LOJA <span>MIX</span></a></div>
+        <div class="nav-icons">
+            <a href="/"><i class="fas fa-arrow-left"></i> Voltar</a>
         </div>
     </div>
+</nav>
+
+<div class="container section-padding carrinho-wrapper">
+    <h2>Seu Carrinho</h2>
+
+    <div class="cart-container">
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Qtd</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <div class="cart-total">
+            <h3>Total:</h3>
+            <button class="btn-main">Finalizar Compra</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
