@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
 import os
@@ -110,15 +110,61 @@ def perfil():
 
 @app.route('/carrinho')
 def carrinho():
-    itens = [
-        {'name': 'Camiseta Oversized Thunder', 'price': 89.90, 'image': 'image.png', 'qtd': 1},
-    ]
-    total = sum(item['price'] * item['qtd'] for item in itens)
+    cart = session.get('cart', {})
+    itens = []
+    total = 0
+    for product_id, quantity in cart.items():
+        product = Product.query.get(int(product_id))
+        if product:
+            item_total = product.price * quantity
+            total += item_total
+            itens.append({
+                'id': product.id,
+                'name': product.name,
+                'price': product.price,
+                'image': product.image,
+                'qtd': quantity,
+                'total': item_total
+            })
     return render_template('carrinho.html', itens=itens, total=total)
 
 @app.route('/adicionar/<int:id>')
 def adicionar(id):
+    product = Product.query.get_or_404(id)
+    cart = session.get('cart', {})
+
+    # Converte id para string pois chaves de dicionário em JSON (session) são strings
+    product_id = str(id)
+    if product_id in cart:
+        cart[product_id] += 1
+    else:
+        cart[product_id] = 1
+
+    session['cart'] = cart
+    flash(f"{product.name} adicionado ao carrinho!", "success")
     return redirect(url_for('carrinho'))
+
+@app.route('/remover/<int:id>')
+def remover(id):
+    cart = session.get('cart', {})
+    product_id = str(id)
+    if product_id in cart:
+        del cart[product_id]
+        session['cart'] = cart
+        flash("Produto removido do carrinho.", "info")
+    return redirect(url_for('carrinho'))
+
+@app.route('/finalizar_compra', methods=['POST'])
+def finalizar_compra():
+    cart = session.get('cart', {})
+    if not cart:
+        flash("Seu carrinho está vazio!", "warning")
+        return redirect(url_for('home'))
+
+    # Aqui poderíamos criar um pedido no banco de dados
+    session.pop('cart', None)
+    flash("Compra realizada com sucesso! Obrigado pela preferência.", "success")
+    return render_template('sucesso.html')
 
 @app.route('/login')
 def login():

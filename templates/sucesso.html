@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Compra Realizada | Loja Mix{% endblock %}
+{% block nav_class %}sticky{% endblock %}
+
+{% block content %}
+<div class="container section-padding" style="text-align: center; min-height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+    <div data-aos="zoom-in" style="background: white; padding: 60px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); max-width: 600px;">
+        <i class="fas fa-check-circle" style="font-size: 6rem; color: #2ecc71; margin-bottom: 30px;"></i>
+        <h1 style="text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; font-weight: 900;">Pedido Confirmado!</h1>
+        <p style="color: #666; margin-bottom: 40px; font-size: 1.1rem;">Sua compra foi processada com sucesso. Em breve você receberá um e-mail com todos os detalhes do seu pedido.</p>
+        <a href="{{ url_for('home') }}" class="btn-main" style="background: black; color: white;">Voltar para a Loja</a>
+    </div>
+</div>
+{% endblock %}

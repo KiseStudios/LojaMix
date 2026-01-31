@@ -31,21 +31,36 @@
                             {% else %}
                                 <img src="{{ url_for('static', filename='img/' + item.image) }}" alt="{{ item.name }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
                             {% endif %}
-                            <span>{{ item.name }}</span>
+                            <div>
+                                <span style="display: block; font-weight: bold;">{{ item.name }}</span>
+                                <a href="{{ url_for('remover', id=item.id) }}" style="color: #e74c3c; font-size: 0.8rem;">Remover</a>
+                            </div>
                         </div>
                     </td>
                     <td>R$ {{ "%.2f"|format(item.price) }}</td>
                     <td>{{ item.qtd }}</td>
-                    <td>R$ {{ "%.2f"|format(item.price * item.qtd) }}</td>
+                    <td>R$ {{ "%.2f"|format(item.total) }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 50px;">Seu carrinho está vazio.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
 
+        {% if itens %}
         <div class="cart-total">
             <h3>Total: R$ {{ "%.2f"|format(total) }}</h3>
-            <button class="btn-main">Finalizar Compra</button>
+            <form action="{{ url_for('finalizar_compra') }}" method="POST">
+                <button type="submit" class="btn-main">Finalizar Compra</button>
+            </form>
         </div>
+        {% else %}
+        <div style="text-align: right; margin-top: 20px;">
+            <a href="{{ url_for('home') }}" class="btn-main">Ir às Compras</a>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

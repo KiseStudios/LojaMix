@@ -4,7 +4,7 @@
 {% block nav_class %}sticky{% endblock %}
 
 {% block content %}
-    <section class="container section-padding" style="margin-top: 80px;">
+    <section class="container section-padding">
         <div class="section-header" data-aos="fade-right">
             <h2>Nossas Categorias</h2>
             <div class="line"></div>
@@ -12,18 +12,10 @@
 
         <div class="product-grid" style="grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));">
             {% for category in categories %}
-            <a href="{{ url_for('ver_categoria', slug=category|slugify) }}" class="category-card" style="display: block; background: white; padding: 40px; text-align: center; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: 0.3s;" data-aos="fade-up">
-                <h3 style="text-transform: uppercase; letter-spacing: 1px;">{{ category }}</h3>
+            <a href="{{ url_for('ver_categoria', slug=category|slugify) }}" class="category-card" data-aos="fade-up">
+                <h3>{{ category }}</h3>
             </a>
             {% endfor %}
         </div>
     </section>
-
-    <style>
-        .category-card:hover {
-            transform: translateY(-5px);
-            background: var(--highlight) !important;
-            color: white !important;
-        }
-    </style>
 {% endblock %}
