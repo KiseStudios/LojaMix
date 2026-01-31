@@ -29,14 +29,14 @@
                         <span class="price">R$ {{ "%.2f"|format(p.price) }}</span>
                     </div>
                 </div>
-                <a href="/adicionar/{{ p.id }}" class="card-link"></a>
+                <a href="{{ url_for('adicionar', id=p.id) }}" class="card-link"></a>
             </div>
             {% endfor %}
         </div>
         {% else %}
         <div style="text-align: center; padding: 50px 0;">
             <p>Nenhum produto encontrado nesta categoria.</p>
-            <a href="/" class="btn-main" style="display: inline-block; margin-top: 20px;">Voltar para Home</a>
+            <a href="{{ url_for('home') }}" class="btn-main" style="display: inline-block; margin-top: 20px;">Voltar para Home</a>
         </div>
         {% endif %}
     </section>

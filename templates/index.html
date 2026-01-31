@@ -34,7 +34,7 @@
                         <span class="price">R$ {{ "%.2f"|format(p.price) }}</span>
                     </div>
                 </div>
-                <a href="/adicionar/{{ p.id }}" class="card-link"></a>
+                <a href="{{ url_for('adicionar', id=p.id) }}" class="card-link"></a>
             </div>
             {% endfor %}
         </div>

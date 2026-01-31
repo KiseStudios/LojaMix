@@ -77,6 +77,10 @@ def feminino():
 def acessorios():
     return redirect(url_for('ver_categoria', slug='acessorios'))
 
+@app.route('/colecoes')
+def colecoes():
+    return redirect(url_for('categorias'))
+
 @app.route('/categoria/<slug>')
 def ver_categoria(slug):
     categories = db.session.query(Product.category).distinct().all()
