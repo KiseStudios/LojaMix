@@ -1,38 +1,57 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Minha Conta | Loja Mix</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <nav class="navbar sticky">
-        <div class="container nav-content">
-            <div class="logo"><a href="/">LOJA <span>MIX</span></a></div>
-            <div class="nav-icons"><a href="/"><i class="fas fa-home"></i> Home</a></div>
-        </div>
-    </nav>
+{% extends "base.html" %}
+{% block title %}Minha Conta | Loja Mix{% endblock %}
+{% block nav_class %}sticky{% endblock %}
 
+{% block content %}
     <div class="container section-padding" style="margin-top: 80px;">
-        <div class="profile-card">
-            <div class="profile-header">
-                <i class="fas fa-user-circle fa-5x"></i>
-                <h2>{{ user.nome }}</h2>
+        <div class="profile-card" style="max-width: 800px;"> <div class="profile-header">
+                <i class="fas fa-user-circle fa-5x" style="color: var(--highlight);"></i>
+                <h2 style="margin-top: 15px;">{{ user.username }}</h2>
                 <p>{{ user.email }}</p>
             </div>
-            <div class="profile-stats">
-                <div class="stat">
-                    <span>{{ user.pedidos }}</span>
-                    <p>Pedidos</p>
-                </div>
-                <div class="stat">
-                    <span>0</span>
-                    <p>Cupons</p>
-                </div>
+
+            <div style="margin-top: 40px; text-align: left;">
+                <h3 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">Meus Pedidos Recentes</h3>
+                
+                {% if pedidos %}
+                    {% for pedido in pedidos %}
+                    <div class="order-item">
+                        <div class="order-header">
+                            <span class="order-id">Pedido #{{ pedido.id }}</span>
+                            <span class="order-date">{{ pedido.date_created.strftime('%d/%m/%Y') }}</span>
+                            <span class="order-status {{ pedido.status|slugify }}">{{ pedido.status }}</span>
+                        </div>
+                        <div class="order-body">
+                            <p><strong>Itens:</strong> {{ pedido.items_description }}</p>
+                            <p><strong>Pagamento:</strong> {{ pedido.payment_method }}</p>
+                            <p><strong>Enviar para:</strong> {{ pedido.address_street }} - {{ pedido.address_city }}</p>
+                        </div>
+                        <div class="order-footer">
+                            <span>Total: R$ {{ "%.2f"|format(pedido.total_price) }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="text-align: center; color: #999;">Nenhum pedido encontrado.</p>
+                {% endif %}
             </div>
-            <button class="btn-main" style="width:100%; margin-top:20px;">Editar Perfil</button>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <a href="{{ url_for('logout') }}" style="color: #d32f2f; font-weight: bold;">Sair da Conta</a>
+            </div>
         </div>
     </div>
-</body>
-</html>
+
+    <style>
+        .order-item { border: 1px solid #eee; border-radius: 8px; margin-bottom: 20px; overflow: hidden; }
+        .order-header { background: #f9f9f9; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; }
+        .order-id { font-weight: bold; color: #333; }
+        .order-body { padding: 15px; font-size: 0.9rem; color: #555; line-height: 1.6; }
+        .order-footer { padding: 15px; background: #fff; border-top: 1px solid #eee; text-align: right; font-weight: bold; font-size: 1.1rem; }
+        
+        /* Badges de Status */
+        .order-status { padding: 5px 10px; border-radius: 20px; font-size: 0.75rem; text-transform: uppercase; font-weight: bold; }
+        .order-status.pago { background: #d4edda; color: #155724; }
+        .order-status.aguardando-pagamento { background: #fff3cd; color: #856404; }
+    </style>
+{% endblock %}

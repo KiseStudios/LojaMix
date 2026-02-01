@@ -1,18 +1,10 @@
 {% extends "base.html" %}
+{% block title %}{{ titulo }} | Loja Mix{% endblock %}
+{% block nav_class %}sticky{% endblock %}
 {% block content %}
-    <header class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
-            <h1>ESTILO QUE <br>DEFINE VOCÊ</h1>
-            <p>A nova coleção de Streetwear já chegou.</p>
-            <a href="#shop" class="btn-main">Ver Coleção</a>
-        </div>
-    </header>
-    <section id="shop" class="container section-padding">
-        <div class="section-header" data-aos="fade-right">
-            <h2>Destaques da Semana</h2>
-            <div class="line"></div>
-        </div>
+    <section class="container section-padding" style="margin-top: 80px;">
+        <div class="section-header" data-aos="fade-right"><h2>{{ titulo }}</h2><div class="line"></div></div>
+        {% if produtos %}
         <div class="product-grid">
             {% for p in produtos %}
             <div class="product-card" data-aos="fade-up" data-aos-delay="100">
@@ -33,5 +25,8 @@
             </div>
             {% endfor %}
         </div>
+        {% else %}
+        <div style="text-align: center; padding: 50px 0;"><p>Nenhum produto encontrado nesta categoria.</p><a href="/" class="btn-main" style="display: inline-block; margin-top: 20px;">Voltar para Home</a></div>
+        {% endif %}
     </section>
 {% endblock %}

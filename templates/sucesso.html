@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Pedido Confirmado!{% endblock %}
+{% block nav_class %}sticky{% endblock %}
+
+{% block content %}
+<div class="container" style="text-align: center; padding: 100px 20px;">
+    <i class="fas fa-check-circle" style="font-size: 80px; color: #27ae60; margin-bottom: 20px;"></i>
+    <h1 style="text-transform: uppercase;">Pedido Confirmado!</h1>
+    <p style="font-size: 1.2rem; color: #555;">Obrigado pela sua compra. O número do seu pedido é <strong>#{{ order.id }}</strong>.</p>
+    
+    <div style="margin-top: 40px;">
+        <a href="{{ url_for('perfil') }}" class="btn-main">Acompanhar Meus Pedidos</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -43,3 +44,68 @@
 
 </body>
 </html>
+=======
+{% extends "base.html" %}
+{% block title %}Meu Carrinho | Loja Mix{% endblock %}
+{% block nav_class %}sticky{% endblock %}
+
+{% block extra_css %}<link rel="stylesheet" href="{{ url_for('static', filename='carrinho.css') }}">{% endblock %}
+
+{% block content %}
+<div class="container section-padding carrinho-wrapper">
+    <h2 style="margin-bottom: 30px; text-transform: uppercase;">Seu Carrinho</h2>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert" style="padding:15px; background:#ffebee; color:red; margin-bottom:20px;">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {% if itens %}
+    <div class="cart-container">
+        <table class="cart-table">
+            <thead><tr><th>Produto</th><th>Preço</th><th>Qtd</th><th>Subtotal</th></tr></thead>
+            <tbody>
+                {% for item in itens %}
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            {% if 'http' in item.product.image %}
+                                <img src="{{ item.product.image }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='img/' + item.product.image) }}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                            {% endif %}
+                            <span>{{ item.product.name }}</span>
+                        </div>
+                    </td>
+                    <td>R$ {{ "%.2f"|format(item.product.price) }}</td>
+                    <td>{{ item.qtd }}</td>
+                    <td>R$ {{ "%.2f"|format(item.subtotal) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="cart-total">
+            <a href="{{ url_for('limpar_carrinho') }}" style="color: #666; font-size: 0.9rem; text-decoration: underline;">Esvaziar Carrinho</a>
+            <div style="text-align: right;">
+                <h3>Total: R$ {{ "%.2f"|format(total) }}</h3>
+                
+                <a href="{{ url_for('checkout') }}" class="btn-main" style="display: inline-block; text-align: center; margin-top: 10px;">
+                    Ir para Pagamento <i class="fas fa-arrow-right"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+    {% else %}
+        <div style="text-align:center; padding: 50px;">
+            <p>Seu carrinho está vazio.</p>
+            <a href="/" class="btn-main" style="margin-top:20px; display:inline-block;">Voltar a comprar</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
+

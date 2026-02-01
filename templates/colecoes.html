@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Coleções | LojaMix</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        .banner { background: #eee; padding: 40px; margin: 20px 0; border-radius: 10px; }
+        a { text-decoration: none; color: white; background: #333; padding: 10px 20px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Nossas Coleções</h1>
+    <div class="banner"><h2>Verão 2026</h2><p>Novidades em breve.</p></div>
+    <div class="banner"><h2>Inverno Urbano</h2><p>Estilo para o frio.</p></div>
+    <a href="{{ url_for('home') }}">Voltar para Home</a>
+</body>
+</html>

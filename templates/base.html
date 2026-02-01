@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LOJA MIX | Streetwear & Fashion{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    {% block extra_css %}{% endblock %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar {% block nav_class %}{% endblock %}" id="main-navbar">
+        <div class="container nav-content">
+            <div class="logo"><a href="/">LOJA <span>MIX</span></a></div>
+            <ul class="nav-links">
+                <li><a href="/masculino">Masculino</a></li>
+                <li><a href="/feminino">Feminino</a></li>
+                <li><a href="/acessorios">Acessórios</a></li>
+                <li><a href="/categorias">Categorias</a></li>
+                <li><a href="/colecoes">Coleções</a></li> </ul>
+            <div class="nav-icons">
+                <a href="/perfil"><i class="far fa-user"></i></a>
+                <a href="/carrinho"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
+    </nav>
+    {% block content %}{% endblock %}
+    <footer style="padding: 40px 0; text-align: center; background: #fff; margin-top: 50px; border-top: 1px solid #eee;">
+        <div class="container"><p>LOJA MIX &copy; 2024. Todos os direitos reservados.</p></div>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        const navbar = document.getElementById('main-navbar');
+        const isAlwaysSticky = navbar.classList.contains('sticky');
+        window.addEventListener('scroll', function() {
+            if (!isAlwaysSticky) { navbar.classList.toggle('sticky', window.scrollY > 0); }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

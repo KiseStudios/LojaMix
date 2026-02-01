@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Finalizar Pedido | Loja Mix{% endblock %}
+{% block nav_class %}sticky{% endblock %}
+
+{% block content %}
+<div class="container section-padding" style="margin-top: 60px;">
+    <h2 style="margin-bottom: 30px;">Finalizar Compra</h2>
+    
+    <form action="{{ url_for('checkout') }}" method="POST" class="checkout-grid">
+        
+        <div class="checkout-form">
+            <h3>1. Endereço de Entrega</h3>
+            <div class="form-group">
+                <label>CEP</label>
+                <input type="text" name="zip" placeholder="00000-000" required>
+            </div>
+            <div class="form-group">
+                <label>Endereço Completo</label>
+                <input type="text" name="address" placeholder="Rua, Número, Bairro" required>
+            </div>
+            <div class="form-group">
+                <label>Cidade / Estado</label>
+                <input type="text" name="city" placeholder="Ex: São Paulo - SP" required>
+            </div>
+
+            <h3 style="margin-top: 30px;">2. Forma de Pagamento</h3>
+            <div class="payment-options">
+                <label class="payment-card">
+                    <input type="radio" name="payment_method" value="Pix" checked>
+                    <div class="card-content">
+                        <i class="fas fa-qrcode"></i>
+                        <span>PIX (Aprovação Imediata)</span>
+                    </div>
+                </label>
+                <label class="payment-card">
+                    <input type="radio" name="payment_method" value="Cartão de Crédito">
+                    <div class="card-content">
+                        <i class="far fa-credit-card"></i>
+                        <span>Cartão de Crédito</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="checkout-summary">
+            <h3>Resumo do Pedido</h3>
+            <div class="summary-row">
+                <span>Itens ({{ qtd_itens }})</span>
+                <span>R$ {{ "%.2f"|format(total) }}</span>
+            </div>
+            <div class="summary-row">
+                <span>Frete</span>
+                <span style="color: #27ae60;">Grátis</span>
+            </div>
+            <div class="summary-total">
+                <span>Total a Pagar</span>
+                <span>R$ {{ "%.2f"|format(total) }}</span>
+            </div>
+            <button type="submit" class="btn-main" style="width: 100%; margin-top: 20px;">CONFIRMAR PEDIDO</button>
+            <p style="font-size: 0.8rem; color: #777; margin-top: 15px; text-align: center;">
+                <i class="fas fa-lock"></i> Ambiente 100% Seguro
+            </p>
+        </div>
+    </form>
+</div>
+
+<style>
+    .checkout-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+    .checkout-form, .checkout-summary { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 5px; }
+    .form-group input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; }
+    
+    .payment-card { display: block; cursor: pointer; margin-bottom: 10px; }
+    .payment-card input { display: none; }
+    .card-content { border: 2px solid #eee; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 10px; transition: 0.3s; }
+    .payment-card input:checked + .card-content { border-color: var(--highlight); background: #fff5f5; }
+    
+    .summary-row { display: flex; justify-content: space-between; margin-bottom: 10px; color: #555; }
+    .summary-total { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+
+    @media (max-width: 768px) { .checkout-grid { grid-template-columns: 1fr; } }
+</style>
+{% endblock %}
